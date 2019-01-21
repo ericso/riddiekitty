@@ -5,13 +5,14 @@ import config from './config';
 import logger from './logger';
 import RiddleMaster from './lib/riddle/riddleMaster';
 import { sendToSlack } from './slack';
+import util from 'util';
 
 
 /** Riddles */
 const riddleMaster = new RiddleMaster();
 
 
-/** Routing */ 
+/** Routing */
 const app = express();
 
 // for parsing JSON requests
@@ -62,9 +63,11 @@ app.post('/events', (req, res) => {
     logger.info(`user ${event.user}`);
 
     if (event.text.includes('tell me a riddle')) {
+
       const prompt = riddleMaster.getPromptFor(event.user);
       logger.info(`the prompt is: ${prompt}`);
-      logger.info(`the channel is: ${event.item.channel}`);
+      logger.info(`event: ${util.inspect(event, {showHidden: false, depth: null})}`);
+
       sendToSlack('token', prompt, event.item.channel);
     } else if (event.text.includes('i give up')) {
       const answer = riddleMaster.getAnswerFor(event.user);
