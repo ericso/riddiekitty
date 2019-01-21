@@ -68,7 +68,8 @@ app.post('/events', (req, res) => {
       logger.info(`the prompt is: ${prompt}`);
       logger.info(`event: ${util.inspect(event, {showHidden: false, depth: null})}`);
 
-      sendToSlack('token', prompt, event.item.channel);
+      sendToSlack('token', prompt, event.channel);
+
     } else if (event.text.includes('i give up')) {
       const answer = riddleMaster.getAnswerFor(event.user);
       logger.info(`the answer is: ${answer}`);
