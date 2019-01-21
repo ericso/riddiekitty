@@ -18,6 +18,11 @@ app.get('/health', (_, res) => res.send('Still alive.'));
 
 app.post('/events', (req, res) => {
   logger.info(`POST /events: ${req}`);
+
+  // TODO: delete
+  logger.info(`SLACK_OAUTH_ACCESS_TOKEN: ${process.env.SLACK_OAUTH_ACCESS_TOKEN}`);
+  logger.info(`SLACK_BOT_USER_OAUTH_ACCESS_TOKEN: ${process.env.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN}`);
+
   res.sendStatus(200);
 
   const payload = req.body;
@@ -30,7 +35,7 @@ app.post('/events', (req, res) => {
   }
 
   // TODO: delete
-  logger.info(`payload.event ${payload.event}`);
+  logger.info(`payload.event.type ${payload.event.type}`);
 
   if (payload.event.type === 'app_mention') {
     if (payload.event.text.includes('tell me a riddle')) {
