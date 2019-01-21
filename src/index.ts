@@ -58,13 +58,17 @@ app.post('/events', (req, res) => {
 
   // Ask a riddle flow
   if (event.type === 'app_mention') {
-    if (event.text.includes('tell me a riddle')) {
-      
-      // Make call to chat.postMessage using bot's token
+    logger.info(`user ${event.user}`);
 
-      logger.info(`asked to tell a riddle by ${event.user}`);
+    if (event.text.includes('tell me a riddle')) {
       const prompt = riddleMaster.getPromptFor(event.user);
       logger.info(`the prompt is ${prompt}`);
+    } else if (event.text.includes('i give up')) {
+      const answer = riddleMaster.getAnswerFor(event.user);
+      logger.info(`the answer is ${answer}`);
+    } else if (event.text.includes('give me a hint')) {
+      const hint = riddleMaster.getHintFor(event.user);
+      logger.info(`here's a hint: ${hint}`);
     }
   }
 });
