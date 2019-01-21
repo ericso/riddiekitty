@@ -62,10 +62,10 @@ app.post('/events', (req, res) => {
 
     if (event.text.includes('tell me a riddle')) {
       const prompt = riddleMaster.getPromptFor(event.user);
-      logger.info(`the prompt is ${prompt}`);
+      logger.info(`the prompt is: ${prompt}`);
     } else if (event.text.includes('i give up')) {
       const answer = riddleMaster.getAnswerFor(event.user);
-      logger.info(`the answer is ${answer}`);
+      logger.info(`the answer is: ${answer}`);
     } else if (event.text.includes('give me a hint')) {
       const hint = riddleMaster.getHintFor(event.user);
       logger.info(`here's a hint: ${hint}`);
