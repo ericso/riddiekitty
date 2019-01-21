@@ -12,6 +12,11 @@ const app = express();
 // health check api for liveness probe
 app.get('/health', (_, res) => res.send('Still alive.'));
 
+app.post('/events', (req, res) => {
+  if (req.type === 'url_verification') {
+    res.send(200, { challenge: req.challenge });
+  }
+});
 
 let port;
 process.argv.forEach((value, _) => {
