@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 
 import config from './config';
 import logger from './logger';
-import RiddleMaster from './lib/riddle/riddlemaster';
+import RiddleMaster from './lib/riddle/riddleMaster';
 
 
 /** Riddles */
