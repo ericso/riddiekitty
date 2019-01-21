@@ -1,3 +1,3 @@
-# nodejs-starter
+# riddiekitty
 
-A starter app for Nodejs with Typescript
+A Slackbot for riddles
