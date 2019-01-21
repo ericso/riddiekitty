@@ -17,10 +17,26 @@ app.use(bodyParser.json());
 app.get('/health', (_, res) => res.send('Still alive.'));
 
 app.post('/events', (req, res) => {
-  logger.info(`POST /events body: ${req.body}`);
+  logger.info(`POST /events: ${req}`);
+  res.sendStatus(200);
 
-  if (req.body.type === 'url_verification') {
-    res.send({ challenge: req.body.challenge });
+  const payload = req.body;
+
+  // TODO: delete
+  logger.info(`payload.type ${payload.type}`);
+
+  if (payload.type === 'url_verification') {
+    res.send({ challenge: payload.challenge });
+  }
+
+  // TODO: delete
+  logger.info(`payload.event ${payload.event}`);
+
+  if (payload.event.type === 'app_mention') {
+    if (payload.event.text.includes('tell me a riddle')) {
+        // Make call to chat.postMessage using bot's token
+        logger.info(`asked to tell a riddle`)
+    }
   }
 });
 
