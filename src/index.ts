@@ -4,9 +4,6 @@ import bodyParser from 'body-parser';
 import config from './config';
 import logger from './logger';
 
-// exports for the library
-export * from './lib';
-
 
 const app = express();
 
@@ -19,6 +16,12 @@ app.get('/health', (_, res) => res.send('Still alive.'));
 app.post('/events', (req, res) => {
   logger.info(`POST /events: ${req}`);
 
+  // Slack requires an immediate response (3 seconds)
+  res.sendStatus(200);
+
+  // TODO: queue requests
+
+  // Slack's URL verification check
   if (req.body.type === 'url_verification') {
     res.send({ challenge: req.body.challenge });
   }
