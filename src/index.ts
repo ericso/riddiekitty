@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import config from './config';
 import logger from './logger';
 import RiddleMaster from './lib/riddle/riddleMaster';
+import { sendToSlack } from './slack';
 
 
 /** Riddles */
@@ -63,6 +64,8 @@ app.post('/events', (req, res) => {
     if (event.text.includes('tell me a riddle')) {
       const prompt = riddleMaster.getPromptFor(event.user);
       logger.info(`the prompt is: ${prompt}`);
+      logger.info(`the channel is: ${event.item.channel}`);
+      sendToSlack('token', prompt, event.item.channel);
     } else if (event.text.includes('i give up')) {
       const answer = riddleMaster.getAnswerFor(event.user);
       logger.info(`the answer is: ${answer}`);
