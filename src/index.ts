@@ -14,7 +14,7 @@ app.get('/health', (_, res) => res.send('Still alive.'));
 
 app.post('/events', (req, res) => {
   if (req.type === 'url_verification') {
-    res.send(200, { challenge: req.challenge });
+    res.send({ challenge: req.challenge });
   }
 });
 
