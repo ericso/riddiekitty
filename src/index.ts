@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 
 import config from './config';
 import logger from './logger';
@@ -9,12 +10,17 @@ export * from './lib';
 
 const app = express();
 
+// for parsing JSON requests
+app.use(bodyParser.json());
+
 // health check api for liveness probe
 app.get('/health', (_, res) => res.send('Still alive.'));
 
 app.post('/events', (req, res) => {
-  if (req.type === 'url_verification') {
-    res.send({ challenge: req.challenge });
+  logger.info(`POST /events: ${req}`);
+
+  if (req.body.type === 'url_verification') {
+    res.send({ challenge: req.body.challenge });
   }
 });
 
