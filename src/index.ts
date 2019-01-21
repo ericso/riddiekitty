@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.get('/health', (_, res) => res.send('Still alive.'));
 
 app.post('/events', (req, res) => {
-  logger.info(`POST /events: ${req}`);
+  logger.info(`POST /events body: ${req.body}`);
 
   if (req.body.type === 'url_verification') {
     res.send({ challenge: req.body.challenge });
