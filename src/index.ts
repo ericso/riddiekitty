@@ -5,7 +5,6 @@ import config from './config';
 import logger from './logger';
 import RiddleMaster from './lib/riddle/riddleMaster';
 import { sendToSlack } from './slack';
-import util from 'util';
 
 
 /** Riddles */
