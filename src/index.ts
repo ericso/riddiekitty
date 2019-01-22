@@ -4,13 +4,14 @@ import bodyParser from 'body-parser';
 import config from './config';
 import logger from './logger';
 import RiddleMaster from './lib/riddle/riddleMaster';
+import { sendToSlack } from './slack';
 
 
 /** Riddles */
 const riddleMaster = new RiddleMaster();
 
 
-/** Routing */ 
+/** Routing */
 const app = express();
 
 // for parsing JSON requests
@@ -58,17 +59,15 @@ app.post('/events', (req, res) => {
 
   // Ask a riddle flow
   if (event.type === 'app_mention') {
-    logger.info(`user ${event.user}`);
-
     if (event.text.includes('tell me a riddle')) {
       const prompt = riddleMaster.getPromptFor(event.user);
-      logger.info(`the prompt is: ${prompt}`);
+      sendToSlack('token', prompt, event.channel);
     } else if (event.text.includes('i give up')) {
       const answer = riddleMaster.getAnswerFor(event.user);
-      logger.info(`the answer is: ${answer}`);
+      sendToSlack('token', answer, event.channel);
     } else if (event.text.includes('give me a hint')) {
       const hint = riddleMaster.getHintFor(event.user);
-      logger.info(`here's a hint: ${hint}`);
+      sendToSlack('token', hint, event.channel);
     }
   }
 });
