@@ -60,22 +60,15 @@ app.post('/events', (req, res) => {
 
   // Ask a riddle flow
   if (event.type === 'app_mention') {
-    logger.info(`user ${event.user}`);
-
     if (event.text.includes('tell me a riddle')) {
-
       const prompt = riddleMaster.getPromptFor(event.user);
-      logger.info(`the prompt is: ${prompt}`);
-      logger.info(`event: ${util.inspect(event, {showHidden: false, depth: null})}`);
-
       sendToSlack('token', prompt, event.channel);
-
     } else if (event.text.includes('i give up')) {
       const answer = riddleMaster.getAnswerFor(event.user);
-      logger.info(`the answer is: ${answer}`);
+      sendToSlack('token', answer, event.channel);
     } else if (event.text.includes('give me a hint')) {
       const hint = riddleMaster.getHintFor(event.user);
-      logger.info(`here's a hint: ${hint}`);
+      sendToSlack('token', hint, event.channel);
     }
   }
 });
